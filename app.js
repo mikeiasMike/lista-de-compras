@@ -79,6 +79,7 @@ let meta = META_INICIAL;
 let historico = [];
 let removidosMes = [];
 let filtroAtual = "pendentes";
+let termoBusca = "";
 
 function uid() {
   return Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
@@ -228,9 +229,18 @@ function renderResumo() {
 }
 
 function itensFiltrados() {
-  if (filtroAtual === "pendentes") return itens.filter(i => !i.comprado);
-  if (filtroAtual === "comprados") return itens.filter(i => i.comprado);
-  return itens;
+  let base;
+  if (filtroAtual === "pendentes") base = itens.filter(i => !i.comprado);
+  else if (filtroAtual === "comprados") base = itens.filter(i => i.comprado);
+  else base = itens;
+
+  const termo = termoBusca.trim().toLowerCase();
+  if (termo) {
+    base = base.filter(i =>
+      i.nome.toLowerCase().includes(termo) || i.categoria.toLowerCase().includes(termo)
+    );
+  }
+  return base;
 }
 
 function renderLista() {
@@ -238,11 +248,13 @@ function renderLista() {
   const visiveis = itensFiltrados();
 
   if (visiveis.length === 0) {
-    const msg = filtroAtual === "pendentes"
-      ? "Nenhum item pendente. Tudo comprado! 🎉"
-      : filtroAtual === "comprados"
-        ? "Nenhum item comprado ainda."
-        : "Sua lista está vazia. Adicione itens abaixo.";
+    const msg = termoBusca.trim()
+      ? `Nenhum item encontrado para "${termoBusca.trim()}".`
+      : filtroAtual === "pendentes"
+        ? "Nenhum item pendente. Tudo comprado! 🎉"
+        : filtroAtual === "comprados"
+          ? "Nenhum item comprado ainda."
+          : "Sua lista está vazia. Adicione itens abaixo.";
     listaContainer.innerHTML = `<div class="empty-state">${msg}</div>`;
     return;
   }
@@ -502,6 +514,27 @@ document.querySelectorAll(".tab").forEach(tab => {
     filtroAtual = tab.dataset.filter;
     renderLista();
   });
+});
+
+// ---------- Busca ----------
+const buscaRow = document.getElementById("buscaRow");
+const buscaInput = document.getElementById("buscaInput");
+
+document.getElementById("btnBusca").addEventListener("click", () => {
+  buscaRow.classList.remove("hidden");
+  buscaInput.focus();
+});
+
+document.getElementById("btnFecharBusca").addEventListener("click", () => {
+  buscaRow.classList.add("hidden");
+  buscaInput.value = "";
+  termoBusca = "";
+  renderLista();
+});
+
+buscaInput.addEventListener("input", () => {
+  termoBusca = buscaInput.value;
+  renderLista();
 });
 
 // ---------- Modal "Adicionar item" ----------
