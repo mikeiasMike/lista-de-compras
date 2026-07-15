@@ -13,6 +13,7 @@
 <header class="app-header">
   <div class="header-top">
     <h1>🛒 Lista de Compras</h1>
+    <span id="miniResumo" class="mini-resumo"></span>
     <button id="btnHistorico" class="icon-btn" title="Histórico">📜</button>
   </div>
 
@@ -44,17 +45,24 @@
 
 <main id="listaContainer"></main>
 
-<section id="formAdd" class="add-form">
-  <h2>Adicionar item</h2>
-  <div class="add-fields">
-    <input type="text" id="novoNome" placeholder="Nome do item" required>
-    <input type="text" id="novaCategoria" list="categoriasList" placeholder="Categoria">
-    <datalist id="categoriasList"></datalist>
-    <input type="text" id="novaQtd" placeholder="Qtd / Peso (ex: 1 kg)">
-    <input type="number" id="novoPreco" placeholder="Preço R$" step="0.01" min="0">
-    <button id="btnAdd" class="btn-primary">+ Adicionar</button>
+<button id="fabAdd" class="fab-add" title="Adicionar item">+</button>
+
+<div id="addModalOverlay" class="modal-overlay hidden">
+  <div class="modal">
+    <div class="modal-header">
+      <h2>Adicionar item</h2>
+      <button id="btnFecharAdd" class="icon-btn">✕</button>
+    </div>
+    <div class="add-fields">
+      <input type="text" id="novoNome" placeholder="Nome do item" required>
+      <input type="text" id="novaCategoria" list="categoriasList" placeholder="Categoria">
+      <datalist id="categoriasList"></datalist>
+      <input type="text" id="novaQtd" placeholder="Qtd / Peso (ex: 1 kg)">
+      <input type="number" id="novoPreco" placeholder="Preço R$" step="0.01" min="0">
+      <button id="btnAdd" class="btn-primary">+ Adicionar</button>
+    </div>
   </div>
-</section>
+</div>
 
 <!-- Histórico -->
 <div id="modalOverlay" class="modal-overlay hidden">

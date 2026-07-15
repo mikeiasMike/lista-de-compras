@@ -16,7 +16,7 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
   background: var(--bg);
   color: #1f2933;
-  padding-bottom: 220px;
+  padding-bottom: 100px;
 }
 
 .app-header {
@@ -27,17 +27,32 @@ body {
   top: 0;
   z-index: 5;
   box-shadow: 0 2px 8px rgba(0,0,0,.15);
+  transition: padding .2s ease;
 }
 
 .header-top {
   display: flex;
   align-items: center;
+  gap: 8px;
   justify-content: space-between;
 }
 
 .header-top h1 {
   font-size: 1.25rem;
   margin: 0 0 10px;
+  white-space: nowrap;
+  transition: font-size .2s ease, margin .2s ease;
+}
+
+.mini-resumo {
+  flex: 1;
+  text-align: right;
+  font-size: .8rem;
+  opacity: 0;
+  max-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  transition: opacity .2s ease;
 }
 
 .icon-btn {
@@ -48,6 +63,7 @@ body {
   border-radius: 50%;
   width: 40px;
   height: 40px;
+  min-width: 40px;
   cursor: pointer;
 }
 
@@ -56,6 +72,35 @@ body {
   border-radius: 12px;
   padding: 10px 12px;
   margin-bottom: 10px;
+  max-height: 300px;
+  opacity: 1;
+  overflow: hidden;
+  transition: max-height .25s ease, opacity .2s ease, margin .25s ease, padding .25s ease;
+}
+
+.app-header.collapsed {
+  padding-top: 8px;
+}
+
+.app-header.collapsed .header-top h1 {
+  font-size: 1.05rem;
+  margin-bottom: 6px;
+}
+
+.app-header.collapsed .mini-resumo {
+  opacity: 1;
+  max-width: 200px;
+}
+
+.app-header.collapsed .budget-box {
+  max-height: 0;
+  opacity: 0;
+  padding: 0 12px;
+  margin-bottom: 0;
+}
+
+.app-header.collapsed .tabs {
+  padding: 4px 0 8px;
 }
 
 .budget-row {
@@ -296,23 +341,25 @@ main {
   margin-top: 8px;
 }
 
-.add-form {
+.fab-add {
   position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: #fff;
-  border-top: 1px solid var(--borda);
-  padding: 10px 12px calc(10px + env(safe-area-inset-bottom));
-  box-shadow: 0 -4px 14px rgba(0,0,0,.08);
-  z-index: 4;
-}
-
-.add-form h2 {
-  font-size: .8rem;
-  text-transform: uppercase;
-  color: var(--cinza);
-  margin: 0 0 6px;
+  right: 18px;
+  bottom: calc(22px + env(safe-area-inset-bottom));
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background: var(--azul);
+  color: #fff;
+  border: none;
+  font-size: 2rem;
+  line-height: 1;
+  box-shadow: 0 4px 14px rgba(0,0,0,.3);
+  cursor: pointer;
+  z-index: 6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 3px;
 }
 
 .add-fields {

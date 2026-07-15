@@ -223,6 +223,8 @@ function renderResumo() {
   const fill = document.getElementById("progressFill");
   fill.style.width = pct + "%";
   fill.classList.toggle("over", gasto > meta && meta > 0);
+
+  document.getElementById("miniResumo").textContent = `${formatarMoeda(gasto)} / ${formatarMoeda(meta)}`;
 }
 
 function itensFiltrados() {
@@ -502,6 +504,20 @@ document.querySelectorAll(".tab").forEach(tab => {
   });
 });
 
+// ---------- Modal "Adicionar item" ----------
+const addModalOverlay = document.getElementById("addModalOverlay");
+
+document.getElementById("fabAdd").addEventListener("click", () => {
+  addModalOverlay.classList.remove("hidden");
+  document.getElementById("novoNome").focus();
+});
+document.getElementById("btnFecharAdd").addEventListener("click", () => {
+  addModalOverlay.classList.add("hidden");
+});
+addModalOverlay.addEventListener("click", (e) => {
+  if (e.target === addModalOverlay) addModalOverlay.classList.add("hidden");
+});
+
 document.getElementById("btnAdd").addEventListener("click", () => {
   const nomeEl = document.getElementById("novoNome");
   const catEl = document.getElementById("novaCategoria");
@@ -640,6 +656,20 @@ function renderHistorico() {
     container.appendChild(bloco);
   });
 }
+
+// ---------- Cabeçalho recolhível ao rolar ----------
+const appHeader = document.querySelector(".app-header");
+let _ultimoScrollY = 0;
+
+window.addEventListener("scroll", () => {
+  const y = window.scrollY;
+  if (y > 90 && y > _ultimoScrollY) {
+    appHeader.classList.add("collapsed");
+  } else if (y < 40 || y < _ultimoScrollY - 5) {
+    appHeader.classList.remove("collapsed");
+  }
+  _ultimoScrollY = y;
+}, { passive: true });
 
 // ---------- Init ----------
 carregar();
