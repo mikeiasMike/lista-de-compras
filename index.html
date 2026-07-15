@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1a3a5c">
+<title>Lista de Compras</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🛒</text></svg>">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="app-header">
+  <div class="header-top">
+    <h1>🛒 Lista de Compras</h1>
+    <button id="btnHistorico" class="icon-btn" title="Histórico">📜</button>
+  </div>
+
+  <div class="budget-box">
+    <div class="budget-row">
+      <label for="metaInput">Meta do mês (R$)</label>
+      <input type="number" id="metaInput" step="0.01" min="0" inputmode="decimal">
+    </div>
+    <div class="progress-wrap">
+      <div class="progress-bar"><div id="progressFill" class="progress-fill"></div></div>
+      <div class="progress-labels">
+        <span id="totalGasto">R$ 0,00 comprado</span>
+        <span id="totalMeta">de R$ 0,00</span>
+      </div>
+    </div>
+    <div class="summary-row">
+      <span>Pendente: <strong id="totalPendente">R$ 0,00</strong></span>
+      <span>Total geral: <strong id="totalGeral">R$ 0,00</strong></span>
+    </div>
+    <button id="btnFinalizar" class="btn-finalizar">✅ Finalizar compra do mês</button>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" data-filter="pendentes">Pendentes</button>
+    <button class="tab" data-filter="comprados">Comprados</button>
+    <button class="tab" data-filter="todos">Todos</button>
+  </div>
+</header>
+
+<main id="listaContainer"></main>
+
+<section id="formAdd" class="add-form">
+  <h2>Adicionar item</h2>
+  <div class="add-fields">
+    <input type="text" id="novoNome" placeholder="Nome do item" required>
+    <input type="text" id="novaCategoria" list="categoriasList" placeholder="Categoria">
+    <datalist id="categoriasList"></datalist>
+    <input type="text" id="novaQtd" placeholder="Qtd / Peso (ex: 1 kg)">
+    <input type="number" id="novoPreco" placeholder="Preço R$" step="0.01" min="0">
+    <button id="btnAdd" class="btn-primary">+ Adicionar</button>
+  </div>
+</section>
+
+<!-- Histórico -->
+<div id="modalOverlay" class="modal-overlay hidden">
+  <div class="modal">
+    <div class="modal-header">
+      <h2>Histórico de compras</h2>
+      <button id="btnFecharHistorico" class="icon-btn">✕</button>
+    </div>
+    <div id="historicoLista" class="historico-lista"></div>
+  </div>
+</div>
+
+<div id="confirmOverlay" class="modal-overlay confirm-overlay hidden">
+  <div class="modal confirm-modal">
+    <p id="confirmMsg"></p>
+    <div class="confirm-actions">
+      <button id="confirmCancelBtn" class="btn-secondary">Cancelar</button>
+      <button id="confirmOkBtn" class="btn-primary">Confirmar</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast" class="toast hidden">
+  <span id="toastMsg"></span>
+  <button id="toastActionBtn" class="toast-action hidden"></button>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
